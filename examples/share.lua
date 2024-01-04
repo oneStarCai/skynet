@@ -8,6 +8,7 @@ if mode == "host" then
 skynet.start(function()
 	skynet.error("new foobar")
 	sharedata.new("foobar", { a=1, b= { "hello",  "world" } })
+	sharedata.new("foobar", { a=2, b= { "hello",  "world" } })
 
 	skynet.fork(function()
 		skynet.sleep(200)	-- sleep 2s
