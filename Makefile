@@ -54,6 +54,8 @@ CSERVICE = snlua logger gate harbor
 LUA_CLIB = skynet \
   client \
   webclient \
+  clientintsocket clientwebsocket intnetpack websocketnetpack \
+  usertime \
   bson md5 sproto lpeg $(TLS_MODULE)
 
 LUA_CLIB_SKYNET = \
@@ -71,6 +73,7 @@ LUA_CLIB_SKYNET = \
   lua-datasheet.c \
   lua-sharetable.c \
   webclient.c \
+  lua-usertime.c \
   \
 
 SKYNET_SRC = skynet_main.c skynet_handle.c skynet_module.c skynet_mq.c \
@@ -122,6 +125,21 @@ $(LUA_CLIB_PATH)/lpeg.so : 3rd/lpeg/lpcap.c 3rd/lpeg/lpcode.c 3rd/lpeg/lpprint.c
 
 $(LUA_CLIB_PATH)/webclient.so : lualib-src/webclient.c | $(LUA_CLIB_PATH)
 	$(CC) $(CFLAGS) $(SHARED) -Ilualib-src/webclient $^ -o $@ -lcurl
+
+$(LUA_CLIB_PATH)/clientintsocket.so : lualib-src/lua-clientintsocket.c | $(LUA_CLIB_PATH)
+	$(CC) $(CFLAGS) $(SHARED) -Ilualib-src -Iskynet-src $^ -o $@
+
+$(LUA_CLIB_PATH)/clientwebsocket.so : lualib-src/lua-clientwebsocket.c | $(LUA_CLIB_PATH)
+	$(CC) $(CFLAGS) $(SHARED) -Ilualib-src -Iskynet-src $^ -o $@
+
+$(LUA_CLIB_PATH)/intnetpack.so : lualib-src/lua-intnetpack.c | $(LUA_CLIB_PATH)
+	$(CC) $(CFLAGS) $(SHARED) -Ilualib-src -Iskynet-src $^ -o $@
+
+$(LUA_CLIB_PATH)/websocketnetpack.so : lualib-src/lua-websocketnetpack.c | $(LUA_CLIB_PATH)
+	$(CC) $(CFLAGS) $(SHARED) -Ilualib-src -Iskynet-src $^ -o $@
+
+$(LUA_CLIB_PATH)/usertime.so : lualib-src/lua-usertime.c | $(LUA_CLIB_PATH)
+	$(CC) $(CFLAGS) $(SHARED) -Ilualib-src $^ -o $@ 
 
 clean :
 	rm -f $(SKYNET_BUILD_PATH)/skynet $(CSERVICE_PATH)/*.so $(LUA_CLIB_PATH)/*.so && \
