@@ -56,6 +56,7 @@ LUA_CLIB = skynet \
   webclient \
   clientintsocket clientwebsocket intnetpack websocketnetpack \
   usertime \
+  log \
   bson md5 sproto lpeg $(TLS_MODULE)
 
 LUA_CLIB_SKYNET = \
@@ -140,6 +141,9 @@ $(LUA_CLIB_PATH)/websocketnetpack.so : lualib-src/lua-websocketnetpack.c | $(LUA
 
 $(LUA_CLIB_PATH)/usertime.so : lualib-src/lua-usertime.c | $(LUA_CLIB_PATH)
 	$(CC) $(CFLAGS) $(SHARED) -Ilualib-src $^ -o $@ 
+
+$(LUA_CLIB_PATH)/log.so : lualib-src/lua-logger.c lualib-src/log.c | $(LUA_CLIB_PATH)
+	g++ $(CFLAGS) $(SHARED) -Ilualib-src $^ -o $@ 
 
 clean :
 	rm -f $(SKYNET_BUILD_PATH)/skynet $(CSERVICE_PATH)/*.so $(LUA_CLIB_PATH)/*.so && \
