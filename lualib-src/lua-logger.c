@@ -76,34 +76,6 @@ static int linit(lua_State* L) {
     int logLevel = lua_tointeger(L, -5);
     //bool quiet = lua_toboolean(L, -6);
 
-    /*
-    if (access(g_szLogDir, 0) == -1) {
-        int flag = mkdir(g_szLogDir, 0777);
-        if (flag == 0) {
-            printf("linit mkdir %s success.\n", g_szLogDir);
-        }
-        else {
-            printf("linit mkdir %s error.\n", g_szLogDir);
-        }
-    }
-
-    log_set_quiet(true); //quiet
-
-    time_t t = time(NULL);
-    struct tm* time = localtime(&t);
-    char buf[64];
-    buf[strftime(buf, sizeof(buf), "%Y-%m-%d", time)] = '\0';
-
-    sprintf(g_szFullName, "%s/%s.%s.log", g_szLogDir, g_szLogName, buf);
-
-    file = fopen(g_szFullName, "w+");
-    if (file == NULL) {
-        printf("file name %s open file error.\n", g_szFullName);
-    } else {
-        printf("loglevel:%d logfile %s create success.\n", logLevel, g_szFullName);
-        log_add_fp(file, logLevel);
-    }
-    */
     if (open_logfile(logLevel) == 0) {
         log_set_quiet(true); //quiet
     }
